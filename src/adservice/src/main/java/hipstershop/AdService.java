@@ -174,44 +174,44 @@ public final class AdService {
     Ad camera =
         Ad.newBuilder()
             .setRedirectUrl("/product/2ZYFJ3GM2N")
-            .setText("Film camera for sale. 50% off.")
+            .setText("Word from the CISOs. 20% off.")
             .build();
     Ad lens =
         Ad.newBuilder()
             .setRedirectUrl("/product/66VCHSJNUP")
-            .setText("Vintage camera lens for sale. 20% off.")
+            .setText("SSH threat analysis whitepaper for sale. 10% off.")
             .build();
     Ad recordPlayer =
         Ad.newBuilder()
             .setRedirectUrl("/product/0PUK6V6EV0")
-            .setText("Vintage record player for sale. 30% off.")
+            .setText("Comparing Machine Identities and Human Identities - An eBook. 30% off.")
             .build();
     Ad bike =
         Ad.newBuilder()
             .setRedirectUrl("/product/9SIQT8TOJO")
-            .setText("City Bike for sale. 10% off.")
+            .setText("Economic Impact of Machine Identity Breaches. 10% off.")
             .build();
     Ad baristaKit =
         Ad.newBuilder()
             .setRedirectUrl("/product/1YMWWN1N4O")
-            .setText("Home Barista kitchen kit for sale. Buy one, get second kit for free")
+            .setText("DevOps Outpacing Certificate Management. Buy and get personalized report for free")
             .build();
     Ad airPlant =
         Ad.newBuilder()
             .setRedirectUrl("/product/6E92ZMYYFZ")
-            .setText("Air plants for sale. Buy two, get third one for free")
+            .setText("Machine Identity Protection for dummies on sale. Buy two, get third one for free")
             .build();
     Ad terrarium =
         Ad.newBuilder()
             .setRedirectUrl("/product/L9ECAV7KIM")
-            .setText("Terrarium for sale. Buy one, get second one for free")
+            .setText("Learning from PKI Mistakes. 50% off")
             .build();
     return ImmutableListMultimap.<String, Ad>builder()
-        .putAll("photography", camera, lens)
-        .putAll("vintage", camera, lens, recordPlayer)
-        .put("cycling", bike)
-        .put("cookware", baristaKit)
-        .putAll("gardening", airPlant, terrarium)
+        .putAll("security", camera, lens)
+        .putAll("developer", camera, lens, recordPlayer)
+        .put("economy", bike)
+        .put("research", baristaKit)
+        .putAll("certificates", airPlant, terrarium)
         .build();
   }
 

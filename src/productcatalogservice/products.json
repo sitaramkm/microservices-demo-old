@@ -2,109 +2,109 @@
     "products": [
         {
             "id": "OLJCESPC7Z",
-            "name": "Vintage Typewriter",
-            "description": "This typewriter looks good in your living room.",
-            "picture": "/static/img/products/typewriter.jpg",
-            "priceUsd": {
-                "currencyCode": "USD",
-                "units": 67,
-                "nanos": 990000000
-            },
-            "categories": ["vintage"]
-        },
-        {
-            "id": "66VCHSJNUP",
-            "name": "Vintage Camera Lens",
-            "description": "You won't have a camera to use it and it probably doesn't work anyway.",
-            "picture": "/static/img/products/camera-lens.jpg",
+            "name": "Veanfi Cloud DevOpsACCELERATE",
+            "description": "An easily consumable service for certificates on the cloud.",
+            "picture": "/static/img/products/devopsdatasheet.png",
             "priceUsd": {
                 "currencyCode": "USD",
                 "units": 12,
-                "nanos": 490000000
+                "nanos": 990000000
             },
-            "categories": ["photography", "vintage"]
-        },
-        {
-            "id": "1YMWWN1N4O",
-            "name": "Home Barista Kit",
-            "description": "Always wanted to brew coffee with Chemex and Aeropress at home?",
-            "picture": "/static/img/products/barista-kit.jpg",
-            "priceUsd": {
-                "currencyCode": "USD",
-                "units": 124
-            },
-            "categories": ["cookware"]
-        },
-        {
-            "id": "L9ECAV7KIM",
-            "name": "Terrarium",
-            "description": "This terrarium will looks great in your white painted living room.",
-            "picture": "/static/img/products/terrarium.jpg",
-            "priceUsd": {
-                "currencyCode": "USD",
-                "units": 36,
-                "nanos": 450000000
-            },
-            "categories": ["gardening"]
-        },
-        {
-            "id": "2ZYFJ3GM2N",
-            "name": "Film Camera",
-            "description": "This camera looks like it's a film camera, but it's actually digital.",
-            "picture": "/static/img/products/film-camera.jpg",
-            "priceUsd": {
-                "currencyCode": "USD",
-                "units": 2245
-            },
-            "categories": ["photography", "vintage"]
-        },
-        {
-            "id": "0PUK6V6EV0",
-            "name": "Vintage Record Player",
-            "description": "It still works.",
-            "picture": "/static/img/products/record-player.jpg",
-            "priceUsd": {
-                "currencyCode": "USD",
-                "units": 65,
-                "nanos": 500000000
-            },
-            "categories": ["music", "vintage"]
-        },
-        {
-            "id": "LS4PSXUNUM",
-            "name": "Metal Camping Mug",
-            "description": "You probably don't go camping that often but this is better than plastic cups.",
-            "picture": "/static/img/products/camp-mug.jpg",
-            "priceUsd": {
-                "currencyCode": "USD",
-                "units": 24,
-                "nanos": 330000000
-            },
-            "categories": ["cookware"]
-        },
-        {
-            "id": "9SIQT8TOJO",
-            "name": "City Bike",
-            "description": "This single gear bike probably cannot climb the hills of San Francisco.",
-            "picture": "/static/img/products/city-bike.jpg",
-            "priceUsd": {
-                "currencyCode": "USD",
-                "units": 789,
-                "nanos": 500000000
-            },
-            "categories": ["cycling"]
+            "categories": ["developer"]
         },
         {
             "id": "6E92ZMYYFZ",
-            "name": "Air Plant",
-            "description": "Have you ever wondered whether air plants need water? Buy one and figure out.",
-            "picture": "/static/img/products/air-plant.jpg",
+            "name": "Machine Identity Protection for dummies",
+            "description": "Venafi Special Edition that help you learn all about machine identities and what is needed to prtect them. Buy one and figure out.",
+            "picture": "/static/img/products/machineidentityprotection.png",
             "priceUsd": {
                 "currencyCode": "USD",
                 "units": 12,
                 "nanos": 300000000
             },
-            "categories": ["gardening"]
+            "categories": ["certificates"]
+        },
+        {
+            "id": "1YMWWN1N4O",
+            "name": "DevOps Outpacing Certificate Management",
+            "description": "Accelerating DevOps by offering a Machine Identity Service. Do you want to learn more?",
+            "picture": "/static/img/products/devopsdisconnect.png",
+            "priceUsd": {
+                "currencyCode": "USD",
+                "units": 24
+            },
+            "categories": ["developer"]
+        },
+        {
+            "id": "L9ECAV7KIM",
+            "name": "PKI Mistakes",
+            "description": "PKI: Are You Doing It Wrong?",
+            "picture": "/static/img/products/pkimistakes.png",
+            "priceUsd": {
+                "currencyCode": "USD",
+                "units": 36,
+                "nanos": 450000000
+            },
+            "categories": ["certificates"]
+        },
+        {
+            "id": "2ZYFJ3GM2N",
+            "name": "Word from the CISOs",
+            "description": "7 CISOs talk abou the need for Machine Identity Protection.",
+            "picture": "/static/img/products/cisoexplains.png",
+            "priceUsd": {
+                "currencyCode": "USD",
+                "units": 245
+            },
+            "categories": ["security", "research"]
+        },
+        {
+            "id": "0PUK6V6EV0",
+            "name": "Veanfi Research Brief",
+            "description": "Comparing Security Controls for Machine Identities and Human Identities",
+            "picture": "/static/img/products/venafiresearch.png",
+            "priceUsd": {
+                "currencyCode": "USD",
+                "units": 165,
+                "nanos": 500000000
+            },
+            "categories": ["analyst", "research"]
+        },
+        {
+            "id": "LS4PSXUNUM",
+            "name": "NIST SP 1800-16 Prescriptive Guidance",
+            "description": "A prescriptive guidance for managing your TLS Certificate Security",
+            "picture": "/static/img/products/nistsp180016.png",
+            "priceUsd": {
+                "currencyCode": "USD",
+                "units": 49,
+                "nanos": 330000000
+            },
+            "categories": ["developer"]
+        },
+        {
+            "id": "9SIQT8TOJO",
+            "name": "Economic Impact of Machine Identity Breaches",
+            "description": "Read what experts say about the economic impact of machine identity breaches",
+            "picture": "/static/img/products/economicimpact.png",
+            "priceUsd": {
+                "currencyCode": "USD",
+                "units": 89,
+                "nanos": 500000000
+            },
+            "categories": ["economy"]
+        },
+        {
+            "id": "66VCHSJNUP",
+            "name": "The Perfect SSH Storm",
+            "description": "Learn about SSH threats, how to prepare, prevent and stop them.",
+            "picture": "/static/img/products/sshstorm.png",
+            "priceUsd": {
+                "currencyCode": "USD",
+                "units": 11,
+                "nanos": 490000000
+            },
+            "categories": ["security", "research"]
         }
     ]
 }

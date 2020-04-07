@@ -7,7 +7,7 @@
                 {{ if eq (len $.items) 0 }}
                     <h3>Your shopping cart is empty!</h3>
                     <p>Items you add to your shopping cart will appear here.</p>
-                    <a class="btn btn-primary" href="/" role="button">Browse Products &rarr; </a>
+                    <a class="btn btn-primary" href="/" role="button">Browse Venafi resources &rarr; </a>
                 {{ else }}
 
                     <div class="row mb-3 py-2">
@@ -19,7 +19,7 @@
                         <div class="col text-right">
                             <form method="POST" action="/cart/empty">
                                 <button class="btn btn-secondary" type="submit">Empty cart</button>
-                                <a class="btn btn-info" href="/" role="button">Browse more products &rarr; </a>
+                                <a class="btn btn-info" href="/" role="button">Browse more resources &rarr; </a>
                             </form>
                     
                         </div>
@@ -65,12 +65,12 @@
                                     <div class="col-md-5 mb-3">
                                         <label for="street_address">Street Address</label>
                                         <input type="text" class="form-control"  name="street_address"
-                                            id="street_address" value="1600 Amphitheatre Parkway" required>
+                                            id="street_address" value="925 Alma St" required>
                                     </div>
                                     <div class="col-md-2 mb-3">
                                         <label for="zip_code">Zip Code</label>
                                         <input type="text" class="form-control"
-                                            name="zip_code" id="zip_code" value="94043" required pattern="\d{4,5}">
+                                            name="zip_code" id="zip_code" value="94301" required pattern="\d{4,5}">
                                     </div>
                                     
                                 </div>
@@ -78,7 +78,7 @@
                                     <div class="col-md-5 mb-3">
                                             <label for="city">City</label>
                                             <input type="text" class="form-control" name="city" id="city"
-                                                value="Mountain View" required>
+                                                value="Palo Alto" required>
                                         </div>
                                     <div class="col-md-2 mb-3">
                                         <label for="state">State</label>
