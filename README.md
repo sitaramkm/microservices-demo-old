@@ -1,19 +1,14 @@
-# Hipster Shop: Cloud-Native Microservices Demo Application
+**Modified to customize the demo. This project is originally developed by Google to demonstrate use of technologies like
+Kubernetes/GKE, Istio, Stackdriver, gRPC and OpenCensus**.
+
+# Custom Book Store: Cloud-Native Microservices Demo Application
 
 This project contains a 10-tier microservices application. The application is a
-web-based e-commerce app called **“Hipster Shop”** where users can browse items,
+web-based e-commerce app called **“Book Store”** where users can browse whitepapers, eBooks
 add them to the cart, and purchase them.
 
-**Google uses this application to demonstrate use of technologies like
-Kubernetes/GKE, Istio, Stackdriver, gRPC and OpenCensus**. This application
-works on any Kubernetes cluster (such as a local one), as well as Google
+This application works on any Kubernetes cluster (such as a local one), as well as Google
 Kubernetes Engine. It’s **easy to deploy with little to no configuration**.
-
-If you’re using this demo, please **★Star** this repository to show your interest!
-
-> 👓**Note to Googlers:** Please fill out the form at
-> [go/microservices-demo](http://go/microservices-demo) if you are using this
-> application.
 
 ## Screenshots
 
@@ -23,13 +18,12 @@ If you’re using this demo, please **★Star** this repository to show your int
 
 ## Service Architecture
 
-**Hipster Shop** is composed of many microservices written in different
+**Book Store** is composed of many microservices written in different
 languages that talk to each other over gRPC.
 
 [![Architecture of
 microservices](./docs/img/architecture-diagram.png)](./docs/img/architecture-diagram.png)
 
-Find **Protocol Buffers Descriptions** at the [`./pb` directory](./pb).
 
 | Service                                              | Language      | Description                                                                                                                       |
 | ---------------------------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------- |
