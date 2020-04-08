@@ -47,14 +47,23 @@ microservices](./docs/img/architecture-diagram.png)](./docs/img/architecture-dia
 To install the bookstore app run the following steps
 1. **Minikube** (~20 minutes) You will deploy the microservices image to a single-node
    Kubernetes cluster running on your development machine. 
-   `minikube start --cpus=4 --memory 4096`
-   `kubectl apply -f <>`
+   - Create a new minikube by running `minikube start --cpus=4 --memory 4096` You can use your existing minikube as well. 
+   - Setup bookstore by running `kubectl apply -f https://raw.githubusercontent.com/sitaramkm/microservices-demo/master/release/kubernetes-manifests.yaml`
+   - Get your minikube ip by running `minikube ip`
+   - Find the NodePort of the frontend-external svc and access the BookStore as `http://<minikubeip>:<frontend-external-svc-nodeport>`
+
 2. **Kind** (~20 minutes) You will deploy the microservices image into a single-node 
    Kubernetes cluster running on Docker in your development machine.
    - Download Docker for Desktop and make sure Kubernetes is enabled
-   - `kubectl appy -f <>`
+   - Setup bookstore by running `kubectl apply -f https://raw.githubusercontent.com/sitaramkm/microservices-demo/master/release/kubernetes-manifests.yaml`
+   - Access the BookStore on your Docker for Desktop using `http://localhost`
+
 3. **Cloud** (~15 minutes) Deploy the microservices into your cloud managed Kubernetes
    cluster. 
+   - Setup bookstore by running `kubectl apply -f https://raw.githubusercontent.com/sitaramkm/microservices-demo/master/release/kubernetes-manifests.yaml`
+   - Find the external ip (this will be the loadbalancer) for frontend-external service.  
+   - Access the BookStore as `http://<external-load-balancer-url>` 
+
 
 ## Setting up NGINX Ingress 
 
