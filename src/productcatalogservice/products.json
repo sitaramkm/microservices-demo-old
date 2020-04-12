@@ -2,7 +2,7 @@
     "products": [
         {
             "id": "OLJCESPC7Z",
-            "name": "Veanfi Cloud DevOpsACCELERATE",
+            "name": "Venafi Cloud DevOpsACCELERATE",
             "description": "An easily consumable service for certificates on the cloud.",
             "picture": "/static/img/products/devopsdatasheet.png",
             "priceUsd": {
@@ -60,7 +60,7 @@
         },
         {
             "id": "0PUK6V6EV0",
-            "name": "Veanfi Research Brief",
+            "name": "Venafi Research Brief",
             "description": "Comparing Security Controls for Machine Identities and Human Identities",
             "picture": "/static/img/products/venafiresearch.png",
             "priceUsd": {

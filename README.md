@@ -38,8 +38,7 @@ microservices](./docs/img/architecture-diagram.png)](./docs/img/architecture-dia
 | [adservice](./src/adservice)                         | Java          | Provides text ads based on given context words.                                                                                   |
 | [loadgenerator](./src/loadgenerator)                 | Python/Locust | Continuously sends requests imitating realistic user shopping flows to the frontend.                                              |
 
-
-## Installation
+## Installing the Application
 
 To install the bookstore app run the following steps
 1. **Minikube** (~20 minutes) You will deploy the microservices image to a single-node
@@ -61,20 +60,51 @@ To install the bookstore app run the following steps
    - Find the external ip (this will be the loadbalancer) for frontend-external service.  
    - Access the BookStore as `http://<external-load-balancer-url>`
 
-## Automated Machine Identity Protection with Venafi
+### Validating the deployed application
+Depending on what you chose to deploy the application you should able to test it with the NodePort (in case of minikube) or using the external IP (localhost in case of Docker and the loadBalancer if deployed on the cloud) You can always find the external-ip of the front end service by running  `kubectl get svc frontend-external -o jsonpath="{.status.loadBalancer.ingress[*].hostname}"`
+
+The deployed application is functional and works great. However, we want to work on securing the application with a publicly trusted certificate and also ensure that all service to service communication is encrypted.
+
+## Install & Configure [NGNIX Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/)  
+This instructions does not apply to minikube. On minikube simply run `minikube addons enable ingress` to enable ingress.
+ To install nginx ingress controller, simply run the following. For more details / additional configurations / installing using Helm, etc go to the [documentation page](https://kubernetes.github.io/ingress-nginx/deploy/)
+
+`kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml`
+`kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml`
+
+**NOTE** that the instruction here installs version **0.30.0** of nginx-controller. To find the most recent release visit the ngix-ingress GitHub repository.
+
+### Validating NGINX ingress controller
+To check the version you have deployed run
+
+`POD_NAMESPACE=ingress-nginx`
+`POD_NAME=$(kubectl get pods -n $POD_NAMESPACE -l app.kubernetes.io/name=ingress-nginx -o jsonpath='{.items[0].metadata.name}')`
+`kubectl exec -it $POD_NAME -n $POD_NAMESPACE -- /nginx-ingress-controller --version`
+
+## Install cert-manager [cert-manager ](https://cert-manager.io/docs/)
+
+Install cert-manager by simply running `kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.2/cert-manager.yaml`
+
+To install cert-manager using Helm charts visit the documentation page.  
+**Note** that the instruction here installs version **v0.14.2** of cert-manager. To find the most recent release version visit the cert-manager GitHub repository
+
+### Validating the cert-manager installation
+The install creates 3 deployments with a replicaSet = 1 and 2 services. Simply run `kubectl get all -n cert-manager` to validate everything is good. If you have deployed using Helm, there is a better way to validate your install and also check the version of cert-manager.
+
+## Install Istio  
+
+
+## Automated Machine Identity Protection with [Venafi](venafi.com)
 
 **Assumptions**
 1. You have access to Venafi cloud. If you don't have one, sign up for an [account ](https://ui.venafi.cloud/login)
-2. You are able to login and access a Project. In the project details page verify that you see some of the integrations .
+2. You are able to login and access a Project. In the project details page verify that you see a list of integrations .
 3. Click on Kubernetes to open the sample configuration. Make a note of the apikey and zone. The apikey and zone look similar but apikey is used for creating a secret and zone is used to configure the certificate issuer.
 
-We will use the [Jetstack cert-manager ](https://cert-manager.io/docs/) , a native Kubernetes certificate management controller to issue certificates using Venafi. The apikey and zone UUID is needed to configure cert-manager to use Venafi as the issuer.
+## Configuring your cluster to use Venafi as certificate issuer
+Venafi will issue certificates using cert-manager, a native Kubernetes certificate management controller. The apikey and zone UUID is needed to configure cert-manager to use Venafi as the issuer.
 
-1. Install cert-manager by simply running `kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.1/cert-manager.yaml`
-   Note that the instruction here installs version **v0.14.1** of cert-manager. To find the most recent release version visit the cert-manager GitHub repository
-   - You can validate that this install creates 3 deployments with a replicaSet = 1 and 2 services. Simply run `kubectl get all -n cert-manager` to validate everything is good.
-
-2. Configure cert-manager to use Venafi Cloud. This will require creating two resources.
+1. Configure cert-manager to use Venafi Cloud. This will require creating two resources.
 
    a. Create a secret `kubectl create secret generic venafi-prd-cloud-secret --namespace=cert-manager --from-literal=apikey='REPLACE_WITH_API_KEY'`
 
@@ -105,13 +135,14 @@ We will use the [Jetstack cert-manager ](https://cert-manager.io/docs/) , a nati
 
    The message `Verified issuer with Venafi server` indicates that you are ready to issue certificates using Venafi.
 
-3. If you deployed the application in a Cloud environment, you will find the A record of a LoadBalancer as the external-ip. In case of minikube it will be pending unless you have ingress addon enabled and in case of Docker on Desktop it will be localhost.
-   - To find the name of the external-ip to access the application run
-   `kubectl get svc frontend-external -o jsonpath="{.status.loadBalancer.ingress[*].hostname}"`
-
 ## Securing the front end
 
-### This is optional. This scenario is specific to AWS and we are also trying to show some Terraform examples to manage certificates.
+### Certificate resources
+### Ingress rules
+
+## Securing the service mesh
+
+###  Optional (ignore for now). This scenario is specific to AWS and we are also trying to show some Terraform examples to manage certificates.
 In the first example (simple scenario) we will
 1. Create DNS entry to map a domain name to the external-ip.
    If you have access to Route53 on AWS and can create record sets, use the sample terraform scripts avaialble [here](tools/terraform/route53)  
@@ -122,10 +153,7 @@ In the first example (simple scenario) we will
 `aws elb create-load-balancer-listeners --load-balancer-name <NAME_OF_ELB> --listeners Protocol=HTTPS,LoadBalancerPort=443,InstanceProtocol=HTTP,InstancePort=80,SSLCertificateId=arn:aws:acm:<cert-arn>`
 4. Try mystore.example.com or https://mystore.example.com from the browser to access the store frontend.
 
-NOTE: When we use Ingress later, we will not be using the LoadBalancer service and will manage certificates using Ingress rules (which is the most common scenario)
 
-
-## Setting up NGINX Ingress
 
 
 ## Install and Configure Istio
