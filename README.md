@@ -1,11 +1,12 @@
-**Modified to customize the demo. This project is originally developed by Google to demonstrate use of technologies like
-Kubernetes/GKE, Istio, Stackdriver, gRPC and OpenCensus**.
+**Originally developed by Google to demonstrate use of technologies like Kubernetes/GKE, Istio, Stackdriver, gRPC and OpenCensus to showcase a microservices demo**.
 
-# Book Store: Cloud-Native Microservices Demo Application
+**The customization involves securing this application with certificates issued by Venafi. The instructions are extended to install cert-manager and configuring Venafi as a certificate issuer to protect machine identities. Machines identities here translates to ingresses, service mesh where encryption is needed.**
+
+# Book Store: Securing Cloud-Native Microservices with Venafi - Demo
 
 This project contains a 10-tier microservices application. The application is a
 web-based e-commerce app called **“Book Store”** where users can browse whitepapers, eBooks
-add them to the cart, and purchase them.
+add them to the cart, and purchase them. The project explores machine identities as it applies to the application and demonstrates ways to protect them to make sure data is encrypted everywhere.  
 
 This application works on any Kubernetes cluster (including a local one. It’s **easy to deploy with little to no configuration**.
 
@@ -69,18 +70,21 @@ The deployed application is functional and works great. However, we want to work
 This instructions does not apply to minikube. On minikube simply run `minikube addons enable ingress` to enable ingress.
  To install nginx ingress controller, simply run the following. For more details / additional configurations / installing using Helm, etc go to the [documentation page](https://kubernetes.github.io/ingress-nginx/deploy/)
 
-`kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml`
-`kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml`
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/provider/cloud-generic.yaml
+```
 
-**NOTE** that the instruction here installs version **0.30.0** of nginx-controller. To find the most recent release visit the ngix-ingress GitHub repository.
+**NOTE** that the instruction here installs version **0.30.0** of nginx-controller. To find the most recent release visit the nginx-ingress GitHub repository.
 
 ### Validating NGINX ingress controller
 To check the version you have deployed run
+```
+POD_NAMESPACE=ingress-nginx
+POD_NAME=$(kubectl get pods -n $POD_NAMESPACE -l app.kubernetes.io/name=ingress-nginx -o jsonpath='{.items[0].metadata.name}')
+kubectl exec -it $POD_NAME -n $POD_NAMESPACE -- /nginx-ingress-controller --version
 
-`POD_NAMESPACE=ingress-nginx`
-`POD_NAME=$(kubectl get pods -n $POD_NAMESPACE -l app.kubernetes.io/name=ingress-nginx -o jsonpath='{.items[0].metadata.name}')`
-`kubectl exec -it $POD_NAME -n $POD_NAMESPACE -- /nginx-ingress-controller --version`
-
+```
 ## Install cert-manager [cert-manager ](https://cert-manager.io/docs/)
 
 Install cert-manager by simply running `kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.2/cert-manager.yaml`
@@ -145,7 +149,7 @@ Venafi will issue certificates using cert-manager, a native Kubernetes certifica
 ###  Optional (ignore for now). This scenario is specific to AWS and we are also trying to show some Terraform examples to manage certificates.
 In the first example (simple scenario) we will
 1. Create DNS entry to map a domain name to the external-ip.
-   If you have access to Route53 on AWS and can create record sets, use the sample terraform scripts avaialble [here](tools/terraform/route53)  
+   If you have access to Route53 on AWS and can create record sets, use the sample terraform scripts available [here](tools/terraform/route53)  
    Once you have a CNAME record defined as an alias for the A record you should be able to access the book store from the browser using the alias. For e.g, mystore.example.com
 2. Request a certificate using Venafi
    Terraform examples to request a certificate from Venafi Cloud is [here](tools/terraform/venafi-cert)
@@ -153,28 +157,15 @@ In the first example (simple scenario) we will
 `aws elb create-load-balancer-listeners --load-balancer-name <NAME_OF_ELB> --listeners Protocol=HTTPS,LoadBalancerPort=443,InstanceProtocol=HTTP,InstancePort=80,SSLCertificateId=arn:aws:acm:<cert-arn>`
 4. Try mystore.example.com or https://mystore.example.com from the browser to access the store frontend.
 
-
-
-
-## Install and Configure Istio
-
-## Working with Istio tools
-
-
 ### Cleanup
-
-1. Delete Istio
-2. Delete Venafi
-3. Delete NGINX Ingress
-4. Delete demo application
 
 If you've deployed the application with `kubectl apply -f [...]`, you can
 run `kubectl delete -f [...]` with the same argument to clean up the deployed
 resources.
 
-Additonal Resources
+Additional Resources
 - Here's the feature list **[Features ](https://github.com/GoogleCloudPlatform/microservices-demo#features):**
-- Build and insatall from scratch **[Instructions ](https://github.com/GoogleCloudPlatform/microservices-demo#installation):**
+- Build and install from scratch **[Instructions ](https://github.com/GoogleCloudPlatform/microservices-demo#installation):**
 
 ---
 

@@ -84,9 +84,3 @@ profiles:
       dockerConfig:
         secretName: skaffold-cfg
      #  path: ~/.docker/config.json
-# "docker-test" profile builds with Docker info in the skaffold
-# testing at this time.
-- name: docker-test
-  build:
-    docker:
-      dockerfile: Dockerfile
