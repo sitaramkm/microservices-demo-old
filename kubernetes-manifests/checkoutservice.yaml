@@ -24,10 +24,11 @@ spec:
     metadata:
       labels:
         app: checkoutservice
+        version: v1
     spec:
       containers:
         - name: server
-          image: checkoutservice
+          image: sitaramiyer/bookstore-demo-checkoutservice
           ports:
           - containerPort: 5050
           readinessProbe:

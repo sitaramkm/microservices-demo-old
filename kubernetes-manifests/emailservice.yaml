@@ -24,11 +24,12 @@ spec:
     metadata:
       labels:
         app: emailservice
+        version: v1
     spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: emailservice
+        image: sitaramiyer/bookstore-demo-emailservice
         ports:
         - containerPort: 8080
         env:

@@ -24,10 +24,11 @@ spec:
     metadata:
       labels:
         app: shippingservice
+        version: v1
     spec:
       containers:
       - name: server
-        image: shippingservice
+        image: sitaramiyer/bookstore-demo-shippingservice
         ports:
         - containerPort: 50051
         env:

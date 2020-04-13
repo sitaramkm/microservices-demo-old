@@ -15,7 +15,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: frontend-new
 spec:
   selector:
     matchLabels:
@@ -24,13 +24,12 @@ spec:
     metadata:
       labels:
         app: frontend
-        version: v1
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       containers:
         - name: server
-          image: sitaramiyer/bookstore-demo-frontend
+          image: sitaramiyer/bookstore-demo-frontend-new
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -79,29 +78,3 @@ spec:
             limits:
               cpu: 200m
               memory: 128Mi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend
-spec:
-  type: ClusterIP
-  selector:
-    app: frontend
-  ports:
-  - name: http
-    port: 80
-    targetPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend-external
-spec:
-  type: LoadBalancer
-  selector:
-    app: frontend
-  ports:
-  - name: http
-    port: 80
-    targetPort: 8080
