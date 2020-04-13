@@ -32,7 +32,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:emailservicev0.1.2
+        image: sitaramiyer/bookstore-demo:emailservice-v0.1.2
         ports:
         - containerPort: 8080
         env:
@@ -86,7 +86,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: sitaramiyer/bookstore-demo:checkoutservicev0.1.2
+          image: sitaramiyer/bookstore-demo:checkoutservice-v0.1.2
           ports:
           - containerPort: 5050
           readinessProbe:
@@ -155,7 +155,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:recommendationservicev0.1.2
+        image: sitaramiyer/bookstore-demo:recommendationservice-v0.1.2
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -215,7 +215,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: sitaramiyer/bookstore-demo:frontendv0.1.2
+          image: sitaramiyer/bookstore-demo:frontend-v0.1.2
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -307,7 +307,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:paymentservicev0.1.2
+        image: sitaramiyer/bookstore-demo:paymentservice-v0.1.2
         ports:
         - containerPort: 50051
         env:
@@ -356,7 +356,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:productcatalogservicev0.1.2
+        image: sitaramiyer/bookstore-demo:productcatalogservice-v0.1.2
         ports:
         - containerPort: 3550
         env:
@@ -413,7 +413,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:cartservicev0.1.2
+        image: sitaramiyer/bookstore-demo:cartservice-v0.1.2
         ports:
         - containerPort: 7070
         env:
@@ -473,7 +473,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: main
-        image: sitaramiyer/bookstore-demo:loadgeneratorv0.1.2
+        image: sitaramiyer/bookstore-demo:loadgenerator-v0.1.2
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
@@ -503,7 +503,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:currencyservicev0.1.2
+        image: sitaramiyer/bookstore-demo:currencyservice-v0.1.2
         ports:
         - name: grpc
           containerPort: 7000
@@ -558,7 +558,7 @@ spec:
     spec:
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:shippingservicev0.1.2
+        image: sitaramiyer/bookstore-demo:shippingservice-v0.1.2
         ports:
         - containerPort: 50051
         env:
@@ -669,7 +669,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:adservicev0.1.2
+        image: sitaramiyer/bookstore-demo:adservice-v0.1.2
         ports:
         - containerPort: 9555
         env:
