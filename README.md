@@ -62,7 +62,11 @@ To install the bookstore app run the following steps
    - Access the BookStore as `http://<external-load-balancer-url>`
 
 ### Validating the deployed application
-Depending on what you chose to deploy the application you should able to test it with the NodePort (in case of minikube) or using the external IP (localhost in case of Docker and the loadBalancer if deployed on the cloud) You can always find the external-ip of the front end service by running  `kubectl get svc frontend-external -o jsonpath="{.status.loadBalancer.ingress[*].hostname}"`
+Depending on what you chose to deploy the application you should able to test it with the NodePort (in case of minikube) or using the external IP (localhost in case of Docker and the loadBalancer if deployed on the cloud) You can always find the external-ip of the front end service by running one of the following. In Google Cloud Platform you will get the external-ip using `ip`  and in AWS you will get the external-ip using `hostname`
+```
+kubectl get svc frontend-external -o jsonpath="{.status.loadBalancer.ingress[*].hostname}"
+kubectl get svc frontend-external -o jsonpath="{.status.loadBalancer.ingress[*].ip}"
+```
 
 The deployed application is functional and works great. However, we want to work on securing the application with a publicly trusted certificate and also ensure that all service to service communication is encrypted.
 
@@ -87,13 +91,21 @@ kubectl exec -it $POD_NAME -n $POD_NAMESPACE -- /nginx-ingress-controller --vers
 ```
 ## Install cert-manager [cert-manager ](https://cert-manager.io/docs/)
 
-Install cert-manager by simply running `kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.2/cert-manager.yaml`
+The manifest file that you use will depend on the server Kubernetes version. If > 1.15 then use `cert-manager.yaml` else use `cert-manager-legacy.yaml`
 
-To install cert-manager using Helm charts visit the documentation page.  
+Install cert-manager by simply running
+```
+If kubernetes server version > 1.15
+  kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.2/cert-manager.yaml
+else
+  kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.2/cert-manager-legacy.yaml
+```
+
+To install cert-manager using Helm charts visit the documentation page.
 **Note** that the instruction here installs version **v0.14.2** of cert-manager. To find the most recent release version visit the cert-manager GitHub repository
 
 ### Validating the cert-manager installation
-The install creates 3 deployments with a replicaSet = 1 and 2 services. Simply run `kubectl get all -n cert-manager` to validate everything is good. If you have deployed using Helm, there is a better way to validate your install and also check the version of cert-manager.
+The install creates 3 deployments(replicaSet = 1) and 2 services. Simply run `kubectl get all -n cert-manager` to validate everything is good. If you have deployed using Helm, there is a better way to validate your install and also check the version of cert-manager.
 
 ## Install Istio  
 
@@ -110,7 +122,11 @@ Venafi will issue certificates using cert-manager, a native Kubernetes certifica
 
 1. Configure cert-manager to use Venafi Cloud. This will require creating two resources.
 
-   a. Create a secret `kubectl create secret generic venafi-prd-cloud-secret --namespace=cert-manager --from-literal=apikey='REPLACE_WITH_API_KEY'`
+   a. Create a secret
+   ```
+   VENAFI_CLOUD_API_KEY=REPLACE_WITH_API_KEY
+   kubectl create secret generic venafi-prd-cloud-secret --namespace=cert-manager --from-literal=apikey=$VENAFI_CLOUD_API_KEY
+   ```
 
    b. Create a ClusterIssuer. ClusterIssuer is a custom resource from cert-manager. Look at the docs to understand more about Issuers and ClusterIssuers.  
    ```
@@ -126,7 +142,7 @@ Venafi will issue certificates using cert-manager, a native Kubernetes certifica
          apiTokenSecretRef:
           name: venafi-prd-cloud-secret # secret that holds the apikey to Venafi cloud
           key: apikey
-   ```
+     ```
    Both these resources are created in the cert-manager space. Validate that the issuer is correctly configured by running
    `kubectl describe ClusterIssuer venafi-prd-cloud-issuer`
 
