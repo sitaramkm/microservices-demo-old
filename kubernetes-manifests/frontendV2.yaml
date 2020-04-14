@@ -24,12 +24,13 @@ spec:
     metadata:
       labels:
         app: frontend
+        version: v2
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       containers:
         - name: server
-          image: sitaramiyer/bookstore-demo-frontend-new
+          image: sitaramiyer/bookstore-demo:frontend-new
           ports:
           - containerPort: 8080
           readinessProbe:

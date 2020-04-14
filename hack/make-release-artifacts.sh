@@ -64,14 +64,14 @@ mk_kubernetes_manifests() {
     out_manifest="$(read_manifests "${SCRIPTDIR}/../kubernetes-manifests")"
 
     # replace "image" repo, tag for each service
-    for dir in ./src/*/
+    for dir in ../src/*/
     do
         svcname="$(basename "${dir}")"
         #image="$REPO_PREFIX/$svcname:$TAG"
         image="${REPO_PREFIX}:$svcname-$TAG"
-        echo "Image is ${image}"
+        # sitaramiyer/bookstore-demo-frontend
+        # to sitaramiyer/bookstore-demo:frontend-v0.1.5
         pattern="^(\s*)image:\s.*$svcname(.*)(\s*)"
-        echo "Pattern is ${pattern}"
         replace="\1image: $image\3"
         out_manifest="$(gsed -r "s|$pattern|$replace|g" <(echo "${out_manifest}") )"
     done

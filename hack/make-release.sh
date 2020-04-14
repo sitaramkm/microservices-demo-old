@@ -35,17 +35,17 @@ if [[ "$TAG" != v* ]]; then
 fi
 
 # build and push images
-#"${SCRIPTDIR}"/make-docker-images.sh
+"${SCRIPTDIR}"/make-docker-images.sh
 
 # update yaml
-#"${SCRIPTDIR}"/make-release-artifacts.sh
+"${SCRIPTDIR}"/make-release-artifacts.sh
 
 # create git release / push to master
-#git add "${SCRIPTDIR}/../release/"
-#git commit --allow-empty -m "Release $TAG"
+git add "${SCRIPTDIR}/../release/"
+git commit --allow-empty -m "Release $TAG"
 log "Pushing k8s manifests to master..."
-#git tag "$TAG"
-#git push --tags
-#git push origin master
+git tag "$TAG"
+git push --tags
+git push origin master
 
 log "Successfully tagged release $TAG."
