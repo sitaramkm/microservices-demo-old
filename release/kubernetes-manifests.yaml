@@ -1,3 +1,5 @@
+Image is sitaramiyer/book-store:*-v0.1.2
+Pattern is ^(\s*)image:\s.**(.*)(\s*)
 # Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +35,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:emailservice-v0.1.2
+        image: sitaramiyer/book-store:*-v0.1.2
         ports:
         - containerPort: 8080
         env:
@@ -88,7 +90,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: sitaramiyer/bookstore-demo:checkoutservice-v0.1.2
+          image: sitaramiyer/book-store:*-v0.1.2
           ports:
           - containerPort: 5050
           readinessProbe:
@@ -158,7 +160,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:recommendationservice-v0.1.2
+        image: sitaramiyer/book-store:*-v0.1.2
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -204,7 +206,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: frontend-new
 spec:
   selector:
     matchLabels:
@@ -213,13 +215,12 @@ spec:
     metadata:
       labels:
         app: frontend
-        version: v1
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       containers:
         - name: server
-          image: sitaramiyer/bookstore-demo:frontend-v0.1.2
+          image: sitaramiyer/book-store:*-v0.1.2
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -272,7 +273,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-new
+  name: frontend
 spec:
   selector:
     matchLabels:
@@ -281,13 +282,13 @@ spec:
     metadata:
       labels:
         app: frontend
-        version: v2
+        version: v1
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       containers:
         - name: server
-          image: sitaramiyer/bookstore-demo-frontend-new-v0.1.2
+          image: sitaramiyer/book-store:*-v0.1.2
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -380,7 +381,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:paymentservice-v0.1.2
+        image: sitaramiyer/book-store:*-v0.1.2
         ports:
         - containerPort: 50051
         env:
@@ -430,7 +431,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:productcatalogservice-v0.1.2
+        image: sitaramiyer/book-store:*-v0.1.2
         ports:
         - containerPort: 3550
         env:
@@ -488,7 +489,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:cartservice-v0.1.2
+        image: sitaramiyer/book-store:*-v0.1.2
         ports:
         - containerPort: 7070
         env:
@@ -527,7 +528,6 @@ spec:
   - name: grpc
     port: 7070
     targetPort: 7070
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -546,7 +546,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:currencyservice-v0.1.2
+        image: sitaramiyer/book-store:*-v0.1.2
         ports:
         - name: grpc
           containerPort: 7000
@@ -602,7 +602,7 @@ spec:
     spec:
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:shippingservice-v0.1.2
+        image: sitaramiyer/book-store:*-v0.1.2
         ports:
         - containerPort: 50051
         env:
@@ -659,7 +659,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: redis:alpine
+        image: sitaramiyer/book-store:*-v0.1.2
         ports:
         - containerPort: 6379
         readinessProbe:
@@ -714,7 +714,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:adservice-v0.1.2
+        image: sitaramiyer/book-store:*-v0.1.2
         ports:
         - containerPort: 9555
         env:
