@@ -156,9 +156,120 @@ Venafi will issue certificates using cert-manager, a native Kubernetes certifica
    The message `Verified issuer with Venafi server` indicates that you are ready to issue certificates using Venafi.
 
 ## Securing the front end
+The following instructions apply when the bookstore application has been deployed on a Cloud managed Kubernetes cluster.
 
 ### Certificate resources
+In this example we will create a certificate resource in the namespace where the bookstore application is deployed. This certificate will
+be referenced in the next step where we bind it to an Ingress rule.
+
+NOTE: The examples below will use the FQDN `mobileapptest.example.com`. Replace this FQDN with a valid one for your environment.
+
+```
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+        name: cloud-venafi-demo
+        namespace: default
+spec:
+        secretName: cert-venafi-demo
+        issuerRef:
+                name: venafi-prd-cloud-issuer
+                kind: ClusterIssuer
+        commonName: mobileapptest.example.com
+```
+
+Save the YAML to a file named `certificate.yaml`.
+
+Create the certificate by using `kubectl apply -f certificate.yaml`. Verify the certificate has been created using
+`kubectl describe -f certificate.yaml`. The following output indicates the certificate has been issued successfully.
+
+```
+API Version:  cert-manager.io/v1alpha2
+Kind:         Certificate
+Metadata:
+  Creation Timestamp:  2020-04-26T17:35:21Z
+  Generation:          1
+  Resource Version:    14363235
+  Self Link:           /apis/cert-manager.io/v1alpha2/namespaces/default/certificates/cloud-venafi-demo
+  UID:                 4dcc8546-87e4-11ea-b3a7-720340d5019b
+Spec:
+  Common Name:  mobileapptest.example.com
+  Issuer Ref:
+    Kind:       ClusterIssuer
+    Name:       venafi-prd-cloud-issuer
+  Secret Name:  cert-venafi-demo
+Status:
+  Conditions:
+    Last Transition Time:  2020-04-26T17:35:24Z
+    Message:               Certificate is up to date and has not expired
+    Reason:                Ready
+    Status:                True
+    Type:                  Ready
+  Not After:               2020-07-25T17:35:22Z
+Events:
+  Type    Reason        Age   From          Message
+  ----    ------        ----  ----          -------
+  Normal  GeneratedKey  30m   cert-manager  Generated a new private key
+  Normal  Requested     30m   cert-manager  Created new CertificateRequest resource "cloud-venafi-demo-2486277031"
+  Normal  Issued        30m   cert-manager  Certificate issued successfully
+```
+
 ### Ingress rules
+A new ingress rule will be created that will enable TLS on the ingress and reference the secret that was created for the
+certificate created above. The Ingress rule will forward traffic to the front-end service (NOT the front-end external service).
+
+```
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - mobileapptest.example.com
+    secretName: cert-venafi-demo
+  rules:
+  - host: mobileapptest.example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: frontend
+          servicePort: 80
+```
+
+Save the YAML to a file `ingress.yaml`. Use the following command to create the ingress: `kubectl apply -f ingress.yaml`.
+
+Once the ingress has been created, use `kubectl desribe -f ingress.yaml` and verify that the ingress was created and the
+annotions to enable TLS and reference the certificate have been created:
+
+```
+Name:             frontend-ingress
+Namespace:        default
+Address:          40.71.234.236
+Default backend:  default-http-backend:80 (<none>)
+TLS:
+  cert-venafi-demo terminates mobileapptest.thehotelcook.com
+Rules:
+  Host                            Path  Backends
+  ----                            ----  --------
+  mobileapptest.thehotelcook.com
+                                  /   frontend:80 (<none>)
+Annotations:
+  kubectl.kubernetes.io/last-applied-configuration:  {"apiVersion":"extensions/v1beta1","kind":"Ingress","metadata":{"annotations":{"kubernetes.io/ingress.class":"nginx"},"name":"frontend-ingress","namespace":"default"},"spec":{"rules":[{"host":"mobileapptest.example.com","http":{"paths":[{"backend":{"serviceName":"frontend","servicePort":80},"path":"/"}]}}],"tls":[{"hosts":["mobileapptest.example.com"],"secretName":"cert-venafi-demo"}]}}
+
+  kubernetes.io/ingress.class:  nginx
+Events:
+  Type    Reason  Age   From                      Message
+  ----    ------  ----  ----                      -------
+  Normal  CREATE  22m   nginx-ingress-controller  Ingress default/frontend-ingress
+  Normal  UPDATE  21m   nginx-ingress-controller  Ingress default/frontend-ingress
+```
+
+You should now be able to open up your browser to https://mobileapptest.example.com and view the bookstore application.
 
 ## Securing the service mesh
 
