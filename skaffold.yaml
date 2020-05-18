@@ -39,7 +39,7 @@ build:
   - image: sitaramiyer/bookstore-demo-frontend
     context: src/frontend
   - image: sitaramiyer/bookstore-demo-frontend-new
-    context: src/frontend-v2
+    context: src/frontend-new
   #- image: sitaramiyer/bookstore-demo-loadgenerator
   #  context: src/loadgenerator
   - image: sitaramiyer/bookstore-demo-adservice

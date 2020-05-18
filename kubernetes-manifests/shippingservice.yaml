@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:shippingservice
+        image: sitaramiyer/bookstore-demo-shippingservice
         ports:
         - containerPort: 50051
         env:

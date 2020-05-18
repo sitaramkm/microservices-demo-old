@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: sitaramiyer/bookstore-demo:frontend
+          image: sitaramiyer/bookstore-demo-frontend
           ports:
           - containerPort: 8080
           readinessProbe:

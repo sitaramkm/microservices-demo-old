@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: server
-          image: sitaramiyer/bookstore-demo:checkoutservice
+          image: sitaramiyer/bookstore-demo-checkoutservice
           ports:
           - containerPort: 5050
           readinessProbe:

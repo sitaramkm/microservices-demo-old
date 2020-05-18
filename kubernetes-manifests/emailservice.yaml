@@ -29,7 +29,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:emailservice
+        image: sitaramiyer/bookstore-demo-emailservice
         ports:
         - containerPort: 8080
         env:

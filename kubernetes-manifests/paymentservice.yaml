@@ -29,7 +29,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:paymentservice
+        image: sitaramiyer/bookstore-demo-paymentservice
         ports:
         - containerPort: 50051
         env:

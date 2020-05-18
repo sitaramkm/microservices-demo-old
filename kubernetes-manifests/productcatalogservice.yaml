@@ -29,7 +29,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: sitaramiyer/bookstore-demo:productcatalogservice
+        image: sitaramiyer/bookstore-demo-productcatalogservice
         ports:
         - containerPort: 3550
         env:
