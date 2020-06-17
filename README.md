@@ -128,7 +128,7 @@ Venafi will issue certificates using cert-manager, a native Kubernetes certifica
    kubectl create secret generic venafi-prd-cloud-secret --namespace=cert-manager --from-literal=apikey=$VENAFI_CLOUD_API_KEY
    ```
 
-   b. Create a ClusterIssuer. ClusterIssuer is a custom resource from cert-manager. Look at the docs to understand more about Issuers and ClusterIssuers.  
+   b. Create a ClusterIssuer. ClusterIssuer is a custom resource from cert-manager. Look at the docs to understand more about Issuers and ClusterIssuers.  E.g.:
    ```
    apiVersion: cert-manager.io/v1alpha2
    kind: ClusterIssuer
@@ -142,6 +142,8 @@ Venafi will issue certificates using cert-manager, a native Kubernetes certifica
          apiTokenSecretRef:
           name: venafi-prd-cloud-secret # secret that holds the apikey to Venafi cloud
           key: apikey
+    
+    $ kubectl create -f venafi-cloud-issuer.yaml
      ```
    Both these resources are created in the cert-manager space. Validate that the issuer is correctly configured by running
    `kubectl describe ClusterIssuer venafi-prd-cloud-issuer`
