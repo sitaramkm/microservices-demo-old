@@ -58,8 +58,7 @@ To install the bookstore app run the following steps
 3. **Cloud** (~15 minutes) Deploy the microservices into your cloud managed Kubernetes
    cluster.
    - Setup bookstore by running `kubectl apply -f https://raw.githubusercontent.com/sitaramkm/microservices-demo/master/release/kubernetes-manifests.yaml`
-   - Find the external ip (this will be the loadbalancer) for frontend-external service.  
-   - Access the BookStore as `http://<external-load-balancer-url>`
+   - Access the BookStore by running `minikube service frontend-external`
 
 ### Validating the deployed application
 Depending on what you chose to deploy the application you should able to test it with the NodePort (in case of minikube) or using the external IP (localhost in case of Docker and the loadBalancer if deployed on the cloud) You can always find the external-ip of the front end service by running one of the following. In Google Cloud Platform you will get the external-ip using `ip`  and in AWS you will get the external-ip using `hostname`
@@ -93,13 +92,13 @@ kubectl exec -it $POD_NAME -n $POD_NAMESPACE -- /nginx-ingress-controller --vers
 
 The manifest file that you use will depend on the server Kubernetes version. If > 1.15 then use `cert-manager.yaml` else use `cert-manager-legacy.yaml`
 
-Install cert-manager by simply running
-```
-If kubernetes server version > 1.15
-  kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.2/cert-manager.yaml
-else
-  kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.2/cert-manager-legacy.yaml
-```
+Check your Kubernetes version with `kubectl version`
+
+If you are running kubernetes server version > 1.15, install `cert-manager` with:
+`kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager.yaml`
+
+If you are running kubernetes servier version < 1.15, install `cert-manager` with: 
+`kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager-legacy.yaml`
 
 To install cert-manager using Helm charts visit the documentation page.
 **Note** that the instruction here installs version **v0.14.2** of cert-manager. To find the most recent release version visit the cert-manager GitHub repository
