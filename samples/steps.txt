@@ -1,0 +1,11 @@
+kubectl apply -f https://raw.githubusercontent.com/sitaramkm/microservices-demo/master/release/kubernetes-manifests.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/cloud/deploy.yaml
+kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.15.0/cert-manager.yaml
+Give a few mins for NGINX and cert-manager to come up and also for Google to provision load balancer.
+
+kubectl create secret generic venafi-prd-cloud-secret --namespace=cert-manager --from-literal=apikey='8d110e0f-905b-4e1f-898a-5caa6080495e'
+
+
+kubectl apply -f samples/issuers/venafi-prod-cloud-issuer.yml
+kubectl apply -f gcp-amplisight-cert.yml 
+

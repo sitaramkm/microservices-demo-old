@@ -1,0 +1,35 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+ name: book-store-crc.venafisandbox.com
+ namespace: default
+spec:
+ secretName: book-store-crc.venafisandbox.com
+ commonName:  book-store-crc.venafisandbox.com
+ dnsNames:
+ - book-store-crc.venafisandbox.com
+ issuerRef:
+   name: venafi-prd-cloud-issuer
+   kind: ClusterIssuer
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    # add an annotation indicating the issuer to use.
+    cert-manager.io/cluster-issuer: venafi-prd-cloud-issuer
+  name: book-store-crc-front1-ingress
+  namespace: default
+spec:
+  tls:
+  - hosts:
+    - book-store-crc.venafisandbox.com
+    secretName: book-store-crc.venafisandbox.com
+  rules:
+  - host: book-store-crc.venafisandbox.com
+    http:
+      paths:
+      - backend:
+          serviceName: frontend
+          servicePort: 80

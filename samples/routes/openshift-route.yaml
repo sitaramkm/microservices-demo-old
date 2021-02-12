@@ -1,0 +1,15 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: book-app
+  annotations:
+    openshift.io/host.generated: 'true'
+spec:
+  host: book-app-default.apps-crc.testing
+  to:
+    kind: Service
+    name: frontend
+    weight: 100
+  port:
+    targetPort: http
+  wildcardPolicy: None

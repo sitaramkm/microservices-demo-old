@@ -1,0 +1,36 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+ name: ven-store-istio2.venafisandbox.com
+ namespace: default
+spec:
+ secretName: ven-store-istio2.venafisandbox.com
+ commonName:  ven-store-istio2.venafisandbox.com
+ dnsNames:
+ - ven-store-istio2.venafisandbox.com
+ issuerRef:
+   name: venafi-prd-cloud-issuer
+   kind: ClusterIssuer
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    # add an annotation indicating the issuer to use.
+    kubernetes.io/ingress.class: istio
+    cert-manager.io/cluster-issuer: venafi-prd-cloud-issuer
+  name: ven-store-istio2-front1-ingress
+  namespace: default
+spec:
+  tls:
+  - hosts:
+    - ven-store-istio2.venafisandbox.com
+    secretName: ven-store-istio2.venafisandbox.com
+  rules:
+  - host: ven-store-istio2.venafisandbox.com
+    http:
+      paths:
+      - backend:
+          serviceName: frontend
+          servicePort: 80

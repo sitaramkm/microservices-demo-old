@@ -1,0 +1,17 @@
+# Create Secret - either using a resource or imperatively. Example below uses an imperative command
+
+
+#kubectl create secret generic venafi-prd-cloud-secret --namespace=cert-manager --from-literal=apikey='0ad84485-171b-4376-9d80-fb242ef79024'
+
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+ name: venafi-prd-cloud-issuer
+ namespace: cert-manager
+spec:
+ venafi:
+  zone: "6c2708c0-738a-11ea-b777-bbef40a3868e"
+  cloud:
+   apiTokenSecretRef:
+    name: venafi-prd-cloud-secret
+    key: apikey

@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test05-route-default.apps-crc-ingress
+  namespace: default
+spec:
+ # tls:
+ # - hosts:
+ #   - test05-route-default.apps-crc.testing
+ #   secretName: test05-route-default.apps-crc.testing
+  rules:
+  - host: test05-route-default.apps-crc.testing
+    http:
+      paths:
+      - backend:
+          serviceName: frontend
+          servicePort: 80
